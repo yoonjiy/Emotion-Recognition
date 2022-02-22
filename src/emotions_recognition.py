@@ -2,6 +2,7 @@ from statistics import mode
 
 import cv2
 from keras.models import load_model
+from models import sample
 import numpy as np
 
 from utils.datasets import get_labels
@@ -23,10 +24,12 @@ emotion_offsets = (20, 40)
 
 # loading models
 face_detection = load_detection_model(detection_model_path)
-emotion_classifier = load_model(emotion_model_path, compile=False)
+model = sample.emotion_recognition((48,48,1))
+emotion_classifier = model.load_weights(emotion_model_path)
+#emotion_classifier = load_model(emotion_model_path, compile=False)
 
 # getting input model shapes for inference
-emotion_target_size = emotion_classifier.input_shape[1:3]
+#emotion_target_size = emotion_classifier.input_shape[1:3]
 
 # starting lists for calculating modes
 emotion_window = []
